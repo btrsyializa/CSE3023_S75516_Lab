@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+
+<!--
+Name: Nurbatrisyia Aliza binti Alias
+Program: SMSK(SE)
+Course: CSE3023
+Lab: MP1
+Date: 07/04/2026
+-->
+
+<html>
+<head>
+    <title>Add User</title>
+</head>
+<body>
+    <h2>Add New User</h2>
+    <form action="InsertServlet" method="POST">
+        Username: <input type="text" name="username" required><br><br>
+        Password: <input type="password" name="password" required><br><br>
+        Role:
+        <select name="roles">
+            <option value="Admin">Admin</option>
+            <option value="Staff">Staff</option>
+            <option value="Student">Student</option>
+        </select><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <br>
+    <a href="ViewServlet">View Users</a>
+</body>
+</html>
