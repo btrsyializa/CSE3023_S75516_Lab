@@ -3,13 +3,13 @@ package com.lab.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.lab.model.GamingStation;
+import com.lab.model.Station;
 import com.lab.util.DBConnection; 
 
 public class StationDAO {
 
-    public List<GamingStation> getAllStations() {
-        List<GamingStation> stations = new ArrayList<>();
+    public List<Station> getAllStations() {
+        List<Station> stations = new ArrayList<>();
 
         // SQL Query ni kena ikut sebiji schema finalize kita
         String query = "SELECT s.station_id, s.pricing_id, s.station_name, s.specifications, s.status, " +
@@ -22,7 +22,7 @@ public class StationDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                GamingStation station = new GamingStation();
+                Station station = new Station();
 
                 // Mapping data dari gaming_station
                 station.setStationId(rs.getString("station_id"));
@@ -49,4 +49,36 @@ public class StationDAO {
 
         return stations;
     }
+    public int getAvailableStationCount() {
+    String query = "SELECT COUNT(*) FROM gaming_station WHERE status = 'available'";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(query);
+         ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) return rs.getInt(1);
+    } catch (Exception e) { e.printStackTrace(); }
+    return 0;
+}
+    // Tambah method ni dlm StationDAO.java kau
+
+public boolean addStation(Station s) {
+    String query = "INSERT INTO gaming_station (station_id, pricing_id, station_name, specifications, status) VALUES (?, ?, ?, ?, ?)";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setString(1, s.getStationId());
+        ps.setString(2, s.getPricingId());
+        ps.setString(3, s.getStationName());
+        ps.setString(4, s.getSpecifications());
+        ps.setString(5, s.getStatus());
+        return ps.executeUpdate() > 0;
+    } catch (SQLException e) { e.printStackTrace(); return false; }
+}
+
+public boolean deleteStation(String id) {
+    String query = "DELETE FROM gaming_station WHERE station_id = ?";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+        ps.setString(1, id);
+        return ps.executeUpdate() > 0;
+    } catch (SQLException e) { e.printStackTrace(); return false; }
+}
 }

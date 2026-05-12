@@ -77,6 +77,7 @@ CREATE TABLE booking (
     booking_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pending', 'approved', 'completed', 'cancelled') DEFAULT 'pending',
     total_price DECIMAL(6,2),
+    payment_proof VARCHAR(255),
     FOREIGN KEY (student_id) REFERENCES student_profile(student_id),
     FOREIGN KEY (station_id) REFERENCES gaming_station(station_id),
     FOREIGN KEY (slot_id) REFERENCES time_slot(slot_id)

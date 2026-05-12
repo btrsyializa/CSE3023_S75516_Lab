@@ -1,6 +1,6 @@
 package com.lab.model;
 
-public class GamingStation {
+public class Station {
     
     // Field asal dari table gaming_station
     private String stationId;
@@ -15,10 +15,10 @@ public class GamingStation {
     private double happyHour;
 
     // Default Constructor
-    public GamingStation() {}
+    public Station() {}
 
     // Constructor dengan parameters (Optional, tapi bagus ada)
-    public GamingStation(String stationId, String pricingId, String stationName, 
+    public Station(String stationId, String pricingId, String stationName, 
                          String specifications, String status) {
         this.stationId = stationId;
         this.pricingId = pricingId;

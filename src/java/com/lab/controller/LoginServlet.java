@@ -35,13 +35,13 @@ public class LoginServlet extends HttpServlet {
             String role = user.getRole();
 
             if ("student".equals(role)) {
-                response.sendRedirect("student/dashboardStudent.jsp");
+                response.sendRedirect("rolesStudent/dashboardStudent.jsp");
 
             } else if ("ajk".equals(role)) {
-                response.sendRedirect("ajk/dashboardAjk.jsp");
+                response.sendRedirect("rolesAjk/dashboardAjk.jsp");
 
             } else if ("advisor".equals(role)) {
-                response.sendRedirect("advisor/dashboardAdvisor.jsp");
+                response.sendRedirect("rolesAdvisor/dashboardAdvisor.jsp");
 
             } else {
                 response.sendRedirect("login.jsp?error=1");
@@ -51,4 +51,23 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("login.jsp?error=1");
         }
     }
+    @Override
+protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {
+    
+    String action = request.getParameter("action");
+
+    if ("logout".equals(action)) {
+        // 1. Buang session data
+        request.getSession().invalidate();
+        
+        // 2. Redirect balik ke login page
+        // Pastikan path login.jsp betul (kalau Servlet kat root, guna "login.jsp")
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    
+    // Kalau orang saja-saja masuk URL tanpa action=logout, hantar ke login juga
+    response.sendRedirect("login.jsp");
+}
 }
