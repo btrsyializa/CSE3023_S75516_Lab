@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+
+<!--
+ * Name: Nurbatrisyia Aliza binti Alias
+ * Program: SMSK(SE)
+ * Course: CSE3023
+ * Lab: IBH12
+ * Date: 12/05/2026
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { margin-bottom: 15px; }
+        td { padding: 5px; }
+    </style>
+</head>
+<body>
+    <h2>Register New User</h2>
+    <form action="processUser.jsp" method="POST">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username" maxlength="15" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" name="password" maxlength="10" required></td>
+            </tr>
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" name="firstname" maxlength="50" required></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" name="lastname" maxlength="50" required></td>
+            </tr>
+        </table>
+        <input type="submit" value="Register">
+        <input type="reset" value="Cancel">
+    </form>
+</body>
+</html>
