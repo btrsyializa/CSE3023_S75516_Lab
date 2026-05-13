@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.lab.model.User, com.lab.model.Booking, com.lab.dao.BookingDAO, java.util.List" %>
 <%
@@ -51,27 +52,40 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if(myBookings == null || myBookings.isEmpty()) { %>
-                            <tr>
-                                <td colspan="5" style="text-align:center; padding: 40px; color: #999;">
-                                    Belum ada history booking. Jom main!
-                                </td>
-                            </tr>
-                        <% } else { 
-                            for(Booking b : myBookings) { %>
-                            <tr>
-                                <td><strong><%= b.getStationName() %></strong></td>
-                                <td><%= b.getSlotTime() %></td>
-                                <td><%= b.getBookingDate() %></td>
-                                <td>RM <%= String.format("%.2f", b.getTotalPrice()) %></td>
-                                <td>
-                                    <span class="badge <%= b.getStatus().toLowerCase() %>">
-                                        <%= b.getStatus().toUpperCase() %>
-                                    </span>
-                                </td>
-                            </tr>
-                        <% } } %>
-                    </tbody>
+    <% if(myBookings == null || myBookings.isEmpty()) { %>
+        <tr>
+            <td colspan="5" style="text-align:center; padding: 40px; color: #999;">
+                Belum ada history booking. Jom main!
+            </td>
+        </tr>
+            <% } else { 
+                // 1. Letak SimpleDateFormat kat sini (Import java.text.SimpleDateFormat kat atas sekali JSP)
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm a");
+
+                for(Booking b : myBookings) { 
+                    String formattedDate = sdf.format(b.getBookingDate());
+                    String statusClass = b.getStatus().toLowerCase();
+            %>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 15px;"><strong><%= b.getStationName() %></strong></td>
+                    <td style="padding: 15px;"><%= b.getSlotTime() %></td>
+                    <td style="padding: 15px;"><%= formattedDate %></td>
+                    <td style="padding: 15px; font-weight: bold;">RM <%= String.format("%.2f", b.getTotalPrice()) %></td>
+                    <td style="padding: 15px; text-align: center;">
+                        <span class="badge <%= statusClass %>" style="
+                            padding: 5px 12px; 
+                            border-radius: 15px; 
+                            font-size: 0.8rem;
+                            <%= statusClass.equals("pending") ? "background: #f59e0b; color: #000;" : 
+                               statusClass.equals("approved") ? "background: #22c55e; color: #fff;" : 
+                               "background: #ef4444; color: #fff;" %>
+                        ">
+                            <%= b.getStatus().toUpperCase() %>
+                        </span>
+                    </td>
+                </tr>
+            <% } } %>
+        </tbody>
                 </table>
             </div>
         </div>

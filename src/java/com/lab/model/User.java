@@ -1,4 +1,3 @@
-
 package com.lab.model;
 
 public class User {
@@ -8,6 +7,7 @@ public class User {
     private String email;
     private String password; 
     private String role; // student, ajk, advisor
+    private String position; // Data dari table ajk_profile 
 
     public User() {}
 
@@ -33,5 +33,7 @@ public class User {
 
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
-    
+
+    public String getPosition() { return position; }
+    public void setPosition(String position) { this.position = position; }
 }

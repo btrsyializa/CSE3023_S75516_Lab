@@ -103,31 +103,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-                        StationDAO sDao = new StationDAO();
-                        List<Station> stations = sDao.getAllStations();
-                        for(Station s : stations) {
-                    %>
-                        <tr>
-                            <td><strong><%= s.getStationName() %></strong></td>
-                            <td><%= s.getStationType() %></td>
-                            <td>RM <%= String.format("%.2f", s.getBasePricePerHour()) %></td>
-                            <td>
-                                <span class="badge <%= (s.getStatus().equalsIgnoreCase("Available") ? "approved" : "occupied") %>">
-                                    <%= s.getStatus().toUpperCase() %>
-                                </span>
-                            </td>
-                            <td style="display: flex; gap: 5px;">
-                                <a href="editStation.jsp?id=<%= s.getStationId() %>" class="btn btn-edit" style="background:#ffc107; padding:5px 10px; border-radius:4px; text-decoration:none; color:black; font-size:0.8rem;">Edit</a>
-                                <a href="../AjkServlet?action=deleteStation&id=<%= s.getStationId() %>" 
-                                   class="btn btn-delete" 
-                                   style="background:#dc3545; padding:5px 10px; border-radius:4px; text-decoration:none; color:white; font-size:0.8rem;"
-                                   onclick="return confirm('Confirm delete station <%= s.getStationName() %>?')">Delete</a>
-                            </td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
+<%
+                            StationDAO sDao = new StationDAO();
+                            List<Station> stations = sDao.getAllStations();
+                            for(Station s : stations) {
+                        %>
+                            <tr>
+                                <td><strong><%= s.getStationName() %></strong></td>
+                                <td><%= s.getStationType() %></td>
+                                <td>RM <%= String.format("%.2f", s.getBasePricePerHour()) %></td>
+                                <td>
+                                    <%-- Guna class badge dari dashboard.css kita --%>
+                                    <span class="badge status-<%= s.getStatus().toLowerCase() %>">
+                                        <%= s.getStatus().toUpperCase() %>
+                                    </span>
+                                </td>
+                                <td style="display: flex; gap: 8px; justify-content: center;">
+                                    <a href="editStation.jsp?id=<%= s.getStationId() %>" class="btn" style="background:#ffc107; padding:5px 12px; border-radius:4px; text-decoration:none; color:black; font-weight:bold; font-size:0.8rem;">Edit</a>
+                                    
+                                    <%-- Guna form POST untuk delete supaya function dlm StationServlet --%>
+                                    <form action="../StationServlet" method="POST" onsubmit="return confirm('Confirm delete station <%= s.getStationName() %>?')">
+                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="stationId" value="<%= s.getStationId() %>">
+                                        <button type="submit" style="background:#dc3545; padding:5px 12px; border-radius:4px; color:white; border:none; cursor:pointer; font-weight:bold; font-size:0.8rem;">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>

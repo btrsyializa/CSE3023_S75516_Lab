@@ -16,38 +16,70 @@
 <html>
 <head>
     <title>Step 2: Select Time Slot - Playje</title>
-    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/style.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/css/dashboard.css">
     <style>
-        .slot-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        .slot-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 20px; }
+        
         .slot-option { 
-            border: 1px solid #ddd; padding: 15px; border-radius: 8px; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 18px; 
+            border-radius: 12px; 
+            cursor: pointer;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            transition: all 0.3s ease;
         }
-        .slot-option:hover { border-color: purple; background: #f9f0ff; }
+        
+        .slot-option:hover { 
+            border-color: #c77dff; 
+            background: rgba(199, 125, 255, 0.1); 
+        }
         
         /* Style bila checkbox kena tick */
-        .slot-checkbox:checked + .slot-label-text { font-weight: bold; color: purple; }
-        .slot-option:has(.slot-checkbox:checked) { border-color: purple; background: #f9f0ff; box-shadow: 0 0 5px rgba(128, 0, 128, 0.2); }
+        .slot-checkbox:checked + .slot-label-text { font-weight: bold; color: #fff; }
+        
+        .slot-option:has(.slot-checkbox:checked) { 
+            border-color: #c77dff; 
+            background: rgba(199, 125, 255, 0.2); 
+            box-shadow: 0 0 15px rgba(199, 125, 255, 0.2); 
+        }
 
         .price-display {
-            margin-top: 20px; padding: 15px; background: #f4f4f4; border-radius: 8px;
-            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 25px; 
+            padding: 20px; 
+            background: rgba(0, 0, 0, 0.2); 
+            border-radius: 12px;
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .slot-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: #c77dff;
+            margin-right: 12px;
         }
     </style>
 </head>
-<body>
+<body style="display: block; background-color: #1a1a2e;">
     <%@ include file="../header.jsp" %>
-    <div class="container" style="max-width: 600px; margin-top: 50px;">
+    
+    <div class="container" style="max-width: 600px; margin-top: 80px;">
         <div class="card">
-            <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
-                <span style="color: green;">✔ Station</span>
-                <span style="color: purple; font-weight: bold;">2. Time Slot</span>
-                <span style="color: #ccc;">3. Payment</span>
+            <!-- Progress Tracker -->
+            <div style="display: flex; justify-content: space-between; margin-bottom: 30px; font-size: 0.9rem;">
+                <span style="color: #22c55e;">✔ Station</span>
+                <span style="color: #c77dff; font-weight: bold;">2. Time Slot</span>
+                <span style="color: #666;">3. Payment</span>
             </div>
 
-            <h2>Available Slots for <%= bookingDate %></h2>
-            <p>Station ID: <strong><%= stationId %></strong></p>
+            <h2 style="color: #fff; margin-bottom: 10px;">Available Slots for <%= bookingDate %></h2>
+            <p style="color: #aaa; margin-bottom: 20px;">Station ID: <strong style="color: #c77dff;"><%= stationId %></strong></p>
 
             <form action="paymentProof.jsp" method="POST" id="slotForm">
                 <input type="hidden" name="stationId" value="<%= stationId %>">
@@ -56,31 +88,31 @@
 
                 <div class="slot-grid">
                     <% if(slots.isEmpty()) { %>
-                        <p style="text-align: center; color: red; padding: 20px;">
-                            No available slots for this date/station. <br>
-                            Please go back and choose another date.
-                        </p>
+                        <div style="text-align: center; color: #ef4444; padding: 40px; background: rgba(239, 68, 68, 0.05); border-radius: 12px; border: 1px dashed #ef4444;">
+                            <p style="margin: 0;">No available slots for this date/station.</p>
+                            <p style="font-size: 0.85rem; margin-top: 5px;">Please go back and choose another date.</p>
+                        </div>
                     <% } else { 
                         for(TimeSlot ts : slots) { %>
                         <label class="slot-option">
-                            <div class="slot-content">
+                            <div style="display: flex; align-items: center;">
                                 <input type="checkbox" name="slotId" value="<%= ts.getSlotId() %>" 
                                        class="slot-checkbox" data-price="7.00" onchange="updateSummary()">
-                                <span class="slot-label-text"><%= ts.getStartTime() %> - <%= ts.getEndTime() %></span>
+                                <span class="slot-label-text" style="color: #eee;"><%= ts.getStartTime() %> - <%= ts.getEndTime() %></span>
                             </div>
-                            <span style="font-weight: bold; color: #333;">RM 7.00</span>
+                            <span style="font-weight: bold; color: #fbbf24;">RM 7.00</span>
                         </label>
                     <% } } %>
                 </div>
 
                 <div class="price-display">
-                    <span>Total Slots Selected: <strong id="countDisplay">0</strong></span>
-                    <span style="font-size: 1.2rem;">Total: <strong id="totalDisplay" style="color: purple;">RM 0.00</strong></span>
+                    <span style="color: #ccc;">Selected: <strong id="countDisplay" style="color: #fff;">0</strong> slots</span>
+                    <span style="font-size: 1.2rem; color: #fff;">Total: <strong id="totalDisplay" style="color: #fbbf24;">RM 0.00</strong></span>
                 </div>
 
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button type="button" onclick="history.back()" class="btn btn-secondary" style="flex: 1;">Back</button>
-                    <button type="submit" id="nextBtn" class="btn btn-primary" style="flex: 2;" disabled>
+                <div style="display: flex; gap: 15px; margin-top: 30px;">
+                    <button type="button" onclick="history.back()" class="btn-secondary" style="flex: 1; background: #444;">Back</button>
+                    <button type="submit" id="nextBtn" class="btn-primary" style="flex: 2; padding: 12px;" disabled>
                         Next: Make Payment
                     </button>
                 </div>
@@ -106,12 +138,10 @@
                 }
             });
 
-            // Update UI
             totalDisplay.innerText = 'RM ' + total.toFixed(2);
             countDisplay.innerText = count;
             hiddenPrice.value = total.toFixed(2);
             
-            // Enable/Disable button
             nextBtn.disabled = (count === 0);
         }
     </script>

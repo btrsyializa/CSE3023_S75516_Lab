@@ -62,10 +62,10 @@
             <div class="form-group">
                 <label>Duty Role:</label>
                 <select name="dutyRole" required>
-                    <option value="Jaga Kaunter" <%= "Jaga Kaunter".equals(schedule.getDutyRole()) ? "selected" : "" %>>Payment Verification</option>
-                    <option value="Sapu Lantai" <%= "Sapu Lantai".equals(schedule.getDutyRole()) ? "selected" : "" %>>Station Management</option>
-                    <option value="Semak Barang" <%= "Semak Barang".equals(schedule.getDutyRole()) ? "selected" : "" %>>Booking Support</option>
-                    <option value="Buat Konten" <%= "Buat Konten".equals(schedule.getDutyRole()) ? "selected" : "" %>>Maintenance</option>
+                    <option value="Jaga Kaunter" <%= "Jaga Kaunter".equals(schedule.getDutyRole()) ? "selected" : "" %>>Jaga Kaunter</option>
+                    <option value="Sapu Lantai" <%= "Sapu Lantai".equals(schedule.getDutyRole()) ? "selected" : "" %>>Sapu Lantai</option>
+                    <option value="Semak Barang" <%= "Semak Barang".equals(schedule.getDutyRole()) ? "selected" : "" %>>Semak Barang</option>
+                    <option value="Record Video" <%= "Record Video".equals(schedule.getDutyRole()) ? "selected" : "" %>>Record Video</option>
                 </select>
             </div>
 

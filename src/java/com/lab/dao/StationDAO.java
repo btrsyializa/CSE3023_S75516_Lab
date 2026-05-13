@@ -81,4 +81,51 @@ public boolean deleteStation(String id) {
         return ps.executeUpdate() > 0;
     } catch (SQLException e) { e.printStackTrace(); return false; }
 }
+// 1. Method untuk tarik satu station sahaja (untuk page Edit)
+public Station getStationById(String id) {
+    Station station = null;
+    String query = "SELECT s.*, p.station_type FROM gaming_station s " +
+                   "LEFT JOIN pricing p ON s.pricing_id = p.pricing_id " +
+                   "WHERE s.station_id = ?";
+    
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+        
+        ps.setString(1, id);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                station = new Station();
+                station.setStationId(rs.getString("station_id"));
+                station.setPricingId(rs.getString("pricing_id"));
+                station.setStationName(rs.getString("station_name"));
+                station.setSpecifications(rs.getString("specifications"));
+                station.setStatus(rs.getString("status"));
+                station.setStationType(rs.getString("station_type")); // Dari join
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return station;
+}
+
+// 2. Method untuk kemas kini data station
+public boolean updateStation(Station s) {
+    String query = "UPDATE gaming_station SET pricing_id=?, station_name=?, specifications=?, status=? WHERE station_id=?";
+    
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+        
+        ps.setString(1, s.getPricingId());
+        ps.setString(2, s.getStationName());
+        ps.setString(3, s.getSpecifications());
+        ps.setString(4, s.getStatus());
+        ps.setString(5, s.getStationId());
+        
+        return ps.executeUpdate() > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 }

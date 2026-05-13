@@ -25,7 +25,6 @@ CREATE TABLE student_profile (
 
 CREATE TABLE ajk_profile (
     ajk_id VARCHAR(50) PRIMARY KEY,
-    staff_id VARCHAR(20) UNIQUE NOT NULL,
     position VARCHAR(100),
 
     FOREIGN KEY (ajk_id)
@@ -123,4 +122,6 @@ CREATE TABLE notification (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-
+UPDATE `time_slot` 
+SET `is_available` = 1 
+WHERE `is_available` = 0;

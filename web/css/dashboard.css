@@ -1,109 +1,108 @@
-
-* {
+/* Layout Utama */
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-}
-
-body {
-    background: #f0f2f5;
-    color: #333;
-    line-height: 1.6;
-    min-height: 100vh;
-}
-
-.navbar {
-    background: #2c3e50;
+    background-color: #1a1a2e;
     color: white;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .container {
     max-width: 1200px;
-    margin: 30px auto;
+    margin: 100px auto 40px auto; /* Margin top 100px supaya tak kena tindih dengan header */
     padding: 0 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
 }
 
-.container .card:last-child { grid-column: 1 / -1; }
-
-.card, .welcome-box, .staff-form {
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
-
-.welcome-box {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white !important;
-}
-
-.welcome-box h2, .welcome-box strong { color: white; }
-
-.stat-card {
-    background: #fff;
+.payment-info-box {
+    background: rgba(255, 255, 255, 0.05); /* Tukar jadi gelap sikit mcm card lain */
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
-    border-radius: 8px;
-    border-left: 5px solid #3498db;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    color: #ffffff; /* Paksa tulisan jadi putih */
 }
 
+/* Atau kalau nak kekalkan kotak putih, paksa tulisan jadi hitam */
+.payment-info-box p {
+    color: #1a1a2e !important; 
+}
+
+/* Table Styling */
 .staff-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    overflow: hidden;
-    border-radius: 8px;
 }
 
-.staff-table thead { background: #34495e; color: white; }
-.staff-table th, .staff-table td { padding: 12px; text-align: left; border-bottom: 1px solid #ecf0f1; }
-.staff-table tr:hover { background: #f8f9fa; }
-
-.form-group { margin-bottom: 15px; }
-.form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-.form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.staff-table th, .staff-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.btn {
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
+.staff-table th {
+    color: #c77dff;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+/* Status Badges */
+.badge { 
+    padding: 6px 14px; 
+    border-radius: 20px; 
+    font-size: 0.8rem; 
+    font-weight: 600; 
     display: inline-block;
-    text-decoration: none;
+    text-transform: capitalize;
 }
 
-.btn-primary { background: #9b59b6; color: white; }
-.btn-edit { background: #ffc107; color: black; }
-.btn-delete, .btn-cancel, .logout-btn { background: #e74c3c; color: white; }
-.btn-view, .btn-save { background: #27ae60; color: white; }
-.btn:hover { opacity: 0.8; transform: translateY(-1px); }
+.status-available { background: #22c55e; color: white; }
+.status-occupied { background: #f59e0b; color: white; }
+.status-maintenance { background: #ef4444; color: white; }
 
-.badge, .status, .status-badge {
-    padding: 5px 12px;
-    border-radius: 4px;
-    font-size: 0.8rem;
+/* Alerts */
+.alert { 
+    padding: 15px; 
+    margin-bottom: 25px; 
+    border-radius: 10px; 
+    text-align: center; 
+    font-weight: 600;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Pastikan table ambil ruang penuh card */
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Jarakkan header table */
+.staff-table th {
+    color: #c77dff;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+/* Status Badge bagi nampak moden */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
     font-weight: bold;
+    display: inline-block;
 }
 
-.pending, .unassigned { background: #fff3cd; color: #856404; }
-.approved, .assigned, .available { background: #d4edda; color: #155724; }
-.cancelled, .occupied { background: #f8d7da; color: #721c24; }
-
-.staff-tab-content { display: none; }
-.staff-tab-content.active { display: block; }
+.status-available { background: #22c55e; color: #fff; }
+.status-occupied { background: #f59e0b; color: #fff; }
+.status-maintenance { background: #ef4444; color: #fff; }
